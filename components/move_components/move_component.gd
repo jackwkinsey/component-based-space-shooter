@@ -12,6 +12,12 @@ extends Node
 ## The input component to get the movement direction from.
 @export var input: InputComponent
 
+## The direction to move the actor in (only used if no Input Component is provided)
+@export var direction: Vector2
+
 
 func _process(delta: float) -> void:
-	actor.translate(input.direction * move_stats.speed * delta)
+	if (input != null):
+		actor.translate(input.direction * move_stats.speed * delta)
+	else:
+		actor.translate(direction * move_stats.speed * delta)
