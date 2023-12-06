@@ -7,5 +7,5 @@ extends Node
 var direction: Vector2
 
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	direction.x = Input.get_axis("left", "right")
