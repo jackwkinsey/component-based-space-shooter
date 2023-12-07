@@ -10,18 +10,17 @@ extends Node2D
 @onready var shake_component: ShakeComponent = $ShakeComponent as ShakeComponent
 @onready var hurtbox_component: HurtboxComponent = $HurtboxComponent as HurtboxComponent
 @onready var hitbox_component: HitboxComponent = $HitboxComponent as HitboxComponent
+@onready var spawner_component: SpawnerComponent = $SpawnerComponent as SpawnerComponent
+@onready var destroyed_component: DestroyedComponent = $DestroyedComponent as DestroyedComponent
 
 
 func _ready() -> void:
 	visible_on_screen_notifier_2d.screen_exited.connect(queue_free)
 	hurtbox_component.hurt.connect(hurt)
-	stats_component.no_health.connect(die)
+	hitbox_component.hit_hurtbox.connect(destroyed_component.destroy.unbind(1))
 
 
-func hurt(hitbox: HitboxComponent):
+func hurt(_hitbox: HitboxComponent):
 	scale_component.tween_scale()
 	flash_component.flash()
 	shake_component.tween_shake()
-
-func die():
-	queue_free()
