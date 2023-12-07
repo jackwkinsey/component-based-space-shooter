@@ -15,7 +15,13 @@ extends Node2D
 func _ready() -> void:
 	visible_on_screen_notifier_2d.screen_exited.connect(queue_free)
 	hurtbox_component.hurt.connect(hurt)
+	stats_component.no_health.connect(die)
 
 
 func hurt(hitbox: HitboxComponent):
+	scale_component.tween_scale()
+	flash_component.flash()
+	shake_component.tween_shake()
+
+func die():
 	queue_free()
