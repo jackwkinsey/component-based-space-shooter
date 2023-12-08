@@ -2,7 +2,6 @@
 class_name InputComponent
 extends Node
 
-
 ## The overall directional input from the player.
 var direction: Vector2
 

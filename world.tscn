@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://chgkqjpthveef"]
+[gd_scene load_steps=5 format=3 uid="uid://chgkqjpthveef"]
 
 [ext_resource type="PackedScene" uid="uid://73hjlnaeg0ug" path="res://player_ship/player_ship.tscn" id="1_03w6o"]
+[ext_resource type="PackedScene" uid="uid://dfpgosubs5hab" path="res://enemies/enemy_generator.tscn" id="2_gsjwo"]
 [ext_resource type="PackedScene" uid="uid://v8w2ctjx8jm1" path="res://effects/space_background.tscn" id="2_manum"]
 [ext_resource type="PackedScene" uid="uid://beoom1nr68vt8" path="res://enemies/green_enemy.tscn" id="3_80dvl"]
 
@@ -9,16 +10,7 @@
 [node name="PlayerShip" parent="." instance=ExtResource("1_03w6o")]
 position = Vector2(80, 216)
 
-[node name="GreenEnemy" parent="." instance=ExtResource("3_80dvl")]
-position = Vector2(80, -40)
-
-[node name="GreenEnemy2" parent="." instance=ExtResource("3_80dvl")]
-position = Vector2(35, -91)
-
-[node name="GreenEnemy3" parent="." instance=ExtResource("3_80dvl")]
-position = Vector2(126, -128)
-
-[node name="GreenEnemy4" parent="." instance=ExtResource("3_80dvl")]
-position = Vector2(83, -182)
+[node name="EnemyGenerator" parent="." instance=ExtResource("2_gsjwo")]
+green_enemy_scene = ExtResource("3_80dvl")
 
 [node name="SpaceBackground" parent="." instance=ExtResource("2_manum")]
