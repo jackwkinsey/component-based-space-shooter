@@ -1,0 +1,57 @@
+[gd_scene load_steps=7 format=3 uid="uid://4jnwpjyb7wgq"]
+
+[ext_resource type="PackedScene" uid="uid://v8w2ctjx8jm1" path="res://effects/space_background.tscn" id="1_8yfdc"]
+[ext_resource type="LabelSettings" uid="uid://bmvkoq41qsvx8" path="res://fonts/title_label_settings.tres" id="2_5205h"]
+[ext_resource type="LabelSettings" uid="uid://bpmv3uq75meb" path="res://fonts/subtitle_label_settings.tres" id="3_nyge1"]
+[ext_resource type="LabelSettings" uid="uid://ca0h8gpkkukc0" path="res://fonts/default_label_settings.tres" id="4_gd3mf"]
+[ext_resource type="Script" path="res://components/input_components/input_component.gd" id="6_1y8u0"]
+[ext_resource type="Script" path="res://components/switch_scene_component.gd" id="7_gx6ju"]
+
+[node name="TitleMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpaceBackground" parent="." instance=ExtResource("1_8yfdc")]
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Space
+Shooter"
+label_settings = ExtResource("2_5205h")
+horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "with components!"
+label_settings = ExtResource("3_nyge1")
+horizontal_alignment = 1
+
+[node name="StartLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Press 'space' to play"
+label_settings = ExtResource("4_gd3mf")
+horizontal_alignment = 1
+
+[node name="InputComponent" type="Node" parent="."]
+script = ExtResource("6_1y8u0")
+
+[node name="SwitchSceneComponent" type="Node" parent="." node_paths=PackedStringArray("input_component")]
+script = ExtResource("7_gx6ju")
+scene = "res://world.tscn"
+input_component = NodePath("../InputComponent")

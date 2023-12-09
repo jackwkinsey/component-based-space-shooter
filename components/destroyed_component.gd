@@ -18,4 +18,4 @@ func _ready() -> void:
 func destroy() -> void:
 	# create an effect (from the spawner component) and free the actor
 	destroy_effect_spawner_component.spawn(actor.global_position)
-	actor.queue_free()
+	stats_component.lives = stats_component.lives - 1

@@ -11,8 +11,17 @@ extends Node
 ## The direction to move the actor in (only used if no Input Component is provided)
 @export var direction: Vector2
 
+var allow_movement: bool
+
+
+func _ready() -> void:
+	allow_movement = true
+
 
 func _process(delta: float) -> void:
+	if not allow_movement:
+		return
+	
 	if (input != null):
 		actor.translate(input.direction * move_stats.speed * delta)
 	else:

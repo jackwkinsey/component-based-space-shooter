@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bmvkoq41qsvx8"]
+
+[ext_resource type="FontFile" uid="uid://6angnfypl2e4" path="res://fonts/kenney_mini_square.ttf" id="1_v2fwr"]
+
+[resource]
+line_spacing = 1.0
+font = ExtResource("1_v2fwr")
+font_size = 32
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)

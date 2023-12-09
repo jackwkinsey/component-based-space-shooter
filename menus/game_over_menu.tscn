@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://dmcv3swy6b8ya"]
+
+[ext_resource type="PackedScene" uid="uid://v8w2ctjx8jm1" path="res://effects/space_background.tscn" id="1_lm1q6"]
+[ext_resource type="LabelSettings" uid="uid://bmvkoq41qsvx8" path="res://fonts/title_label_settings.tres" id="2_6wchr"]
+[ext_resource type="LabelSettings" uid="uid://ca0h8gpkkukc0" path="res://fonts/default_label_settings.tres" id="3_sa3cy"]
+[ext_resource type="Script" path="res://components/input_components/input_component.gd" id="5_c4uig"]
+[ext_resource type="Script" path="res://components/switch_scene_component.gd" id="6_5omr6"]
+
+[node name="GameOverMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SpaceBackground" parent="." instance=ExtResource("1_lm1q6")]
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="GameOverLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Game
+Over"
+label_settings = ExtResource("2_6wchr")
+horizontal_alignment = 1
+
+[node name="StartMenuLabel" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Press 'space' to return
+to the start menu"
+label_settings = ExtResource("3_sa3cy")
+horizontal_alignment = 1
+
+[node name="InputComponent" type="Node" parent="."]
+script = ExtResource("5_c4uig")
+
+[node name="SwitchSceneComponent" type="Node" parent="." node_paths=PackedStringArray("input_component")]
+script = ExtResource("6_5omr6")
+scene = "res://menus/title_menu.tscn"
+input_component = NodePath("../InputComponent")

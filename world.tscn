@@ -9,6 +9,7 @@
 
 [node name="PlayerShip" parent="." instance=ExtResource("1_03w6o")]
 position = Vector2(80, 216)
+starting_position = Vector2(80, 216)
 
 [node name="EnemyGenerator" parent="." instance=ExtResource("2_gsjwo")]
 green_enemy_scene = ExtResource("3_80dvl")

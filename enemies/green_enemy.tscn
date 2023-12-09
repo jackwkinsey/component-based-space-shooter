@@ -51,6 +51,7 @@ move_stats = ExtResource("3_xd66m")
 
 [node name="StatsComponent" parent="." index="2"]
 health = 3
+max_health = 3
 
 [node name="VisibleOnScreenNotifier2D" parent="." index="3"]
 position = Vector2(0, 0.500001)

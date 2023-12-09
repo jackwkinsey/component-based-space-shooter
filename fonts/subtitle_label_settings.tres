@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://bpmv3uq75meb"]
+
+[ext_resource type="FontFile" uid="uid://6angnfypl2e4" path="res://fonts/kenney_mini_square.ttf" id="1_cribo"]
+
+[resource]
+line_spacing = 1.0
+font = ExtResource("1_cribo")
+font_color = Color(0.921569, 0.917647, 0, 1)
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)

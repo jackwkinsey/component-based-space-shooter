@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://73hjlnaeg0ug"]
+[gd_scene load_steps=29 format=3 uid="uid://73hjlnaeg0ug"]
 
 [ext_resource type="Script" path="res://player_ship/player_ship.gd" id="1_nn2vu"]
 [ext_resource type="Texture2D" uid="uid://d1k5x8otsjyad" path="res://assets/ship.png" id="1_o3q25"]
@@ -14,6 +14,8 @@
 [ext_resource type="Script" path="res://components/hurt_component.gd" id="12_1tsyq"]
 [ext_resource type="PackedScene" uid="uid://bqtnvx1euha5t" path="res://effects/explosion_effect.tscn" id="13_58exr"]
 [ext_resource type="Script" path="res://components/destroyed_component.gd" id="14_dj3ks"]
+[ext_resource type="Script" path="res://components/switch_scene_component.gd" id="15_jnqxo"]
+[ext_resource type="Script" path="res://components/flash_component.gd" id="16_q3ldh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rq4pv"]
 atlas = ExtResource("1_o3q25")
@@ -164,6 +166,7 @@ autostart = true
 
 [node name="StatsComponent" type="Node" parent="."]
 script = ExtResource("10_puhyq")
+lives = 2
 
 [node name="HurtboxComponent" type="Area2D" parent="."]
 collision_mask = 0
@@ -187,3 +190,13 @@ script = ExtResource("14_dj3ks")
 actor = NodePath("..")
 stats_component = NodePath("../StatsComponent")
 destroy_effect_spawner_component = NodePath("../ExplosionSpawnerComponent")
+
+[node name="SwitchSceneComponent" type="Node" parent="." node_paths=PackedStringArray("input_component")]
+script = ExtResource("15_jnqxo")
+scene = "res://menus/game_over_menu.tscn"
+input_component = NodePath("../InputComponent")
+
+[node name="FlashComponent" type="Node" parent="." node_paths=PackedStringArray("sprite")]
+script = ExtResource("16_q3ldh")
+sprite = NodePath("../ShipAnimatedSprite")
+flash_duration = 1.0

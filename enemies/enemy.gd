@@ -17,6 +17,7 @@ func _ready() -> void:
 	visible_on_screen_notifier_2d.screen_exited.connect(queue_free)
 	hurtbox_component.hurt.connect(hurt)
 	hitbox_component.hit_hurtbox.connect(destroyed_component.destroy.unbind(1))
+	stats_component.no_lives.connect(queue_free)
 
 
 func hurt(_hitbox: HitboxComponent):
