@@ -1,9 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://73hjlnaeg0ug"]
+[gd_scene load_steps=30 format=3 uid="uid://73hjlnaeg0ug"]
 
 [ext_resource type="Script" path="res://player_ship/player_ship.gd" id="1_nn2vu"]
 [ext_resource type="Texture2D" uid="uid://d1k5x8otsjyad" path="res://assets/ship.png" id="1_o3q25"]
 [ext_resource type="Texture2D" uid="uid://cv1kns035xul7" path="res://assets/ship_flame.png" id="3_kcedh"]
 [ext_resource type="Script" path="res://components/input_components/input_component.gd" id="3_uchng"]
+[ext_resource type="Script" path="res://components/shake_component.gd" id="4_g61jm"]
 [ext_resource type="Script" path="res://components/move_components/move_component.gd" id="4_i3yse"]
 [ext_resource type="Resource" uid="uid://ddotjbytd8dag" path="res://player_ship/player_move_stats.tres" id="4_wongk"]
 [ext_resource type="Script" path="res://components/position_clamp_component.gd" id="5_6o0kt"]
@@ -123,6 +124,73 @@ height = 10.0
 [node name="PlayerShip" type="Node2D"]
 script = ExtResource("1_nn2vu")
 
+[node name="Components" type="Node" parent="."]
+
+[node name="DeathFlashComponent" type="Node" parent="Components" node_paths=PackedStringArray("sprite")]
+unique_name_in_owner = true
+script = ExtResource("16_q3ldh")
+sprite = NodePath("../../ShipAnimatedSprite")
+flash_duration = 1.0
+
+[node name="DestroyedComponent" type="Node" parent="Components" node_paths=PackedStringArray("actor", "stats_component", "destroy_effect_spawner_component")]
+unique_name_in_owner = true
+script = ExtResource("14_dj3ks")
+actor = NodePath("../..")
+stats_component = NodePath("../StatsComponent")
+destroy_effect_spawner_component = NodePath("../../ExplosionSpawnerComponent")
+
+[node name="HitFlashComponent" type="Node" parent="Components" node_paths=PackedStringArray("sprite")]
+unique_name_in_owner = true
+script = ExtResource("16_q3ldh")
+sprite = NodePath("../../ShipAnimatedSprite")
+flash_duration = 0.3
+
+[node name="HitShakeComponent" type="Node" parent="Components" node_paths=PackedStringArray("node")]
+unique_name_in_owner = true
+script = ExtResource("4_g61jm")
+node = NodePath("../../ShipAnimatedSprite")
+shake_duration = 0.3
+
+[node name="HurtComponent" type="Node" parent="Components" node_paths=PackedStringArray("stats_component", "hurtbox_component")]
+unique_name_in_owner = true
+script = ExtResource("12_1tsyq")
+stats_component = NodePath("../StatsComponent")
+hurtbox_component = NodePath("../../HurtboxComponent")
+
+[node name="InputComponent" type="Node" parent="Components"]
+unique_name_in_owner = true
+script = ExtResource("3_uchng")
+
+[node name="MoveComponent" type="Node" parent="Components" node_paths=PackedStringArray("actor", "input")]
+unique_name_in_owner = true
+script = ExtResource("4_i3yse")
+actor = NodePath("../..")
+move_stats = ExtResource("4_wongk")
+input = NodePath("../InputComponent")
+
+[node name="PositionClampComponent" type="Node" parent="Components" node_paths=PackedStringArray("actor")]
+unique_name_in_owner = true
+script = ExtResource("5_6o0kt")
+actor = NodePath("../..")
+
+[node name="StatsComponent" type="Node" parent="Components"]
+unique_name_in_owner = true
+script = ExtResource("10_puhyq")
+health = 3
+lives = 3
+max_health = 3
+
+[node name="SwitchSceneComponent" type="Node" parent="Components" node_paths=PackedStringArray("input_component")]
+unique_name_in_owner = true
+script = ExtResource("15_jnqxo")
+scene = "res://menus/game_over_menu.tscn"
+input_component = NodePath("../InputComponent")
+
+[node name="FireRateTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.4
+autostart = true
+
 [node name="ShipAnimatedSprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
 z_index = 1
@@ -137,38 +205,8 @@ sprite_frames = SubResource("SpriteFrames_k3exy")
 animation = &"center"
 autoplay = "center"
 
-[node name="InputComponent" type="Node" parent="."]
-script = ExtResource("3_uchng")
-
-[node name="MoveComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "input")]
-script = ExtResource("4_i3yse")
-actor = NodePath("..")
-move_stats = ExtResource("4_wongk")
-input = NodePath("../InputComponent")
-
-[node name="PositionClampComponent" type="Node" parent="." node_paths=PackedStringArray("actor")]
-script = ExtResource("5_6o0kt")
-actor = NodePath("..")
-
-[node name="LeftCannon" type="Marker2D" parent="."]
-position = Vector2(-5, -4)
-
-[node name="RightCannon" type="Marker2D" parent="."]
-position = Vector2(5, -4)
-
-[node name="SpawnerComponent" type="Node2D" parent="."]
-script = ExtResource("7_r0y65")
-scene = ExtResource("8_ey5nt")
-
-[node name="FireRateTimer" type="Timer" parent="."]
-wait_time = 0.4
-autostart = true
-
-[node name="StatsComponent" type="Node" parent="."]
-script = ExtResource("10_puhyq")
-lives = 2
-
 [node name="HurtboxComponent" type="Area2D" parent="."]
+unique_name_in_owner = true
 collision_mask = 0
 script = ExtResource("11_cfqxc")
 
@@ -176,27 +214,20 @@ script = ExtResource("11_cfqxc")
 z_index = 1
 shape = SubResource("CapsuleShape2D_m67ie")
 
-[node name="HurtComponent" type="Node" parent="." node_paths=PackedStringArray("stats_component", "hurtbox_component")]
-script = ExtResource("12_1tsyq")
-stats_component = NodePath("../StatsComponent")
-hurtbox_component = NodePath("../HurtboxComponent")
+[node name="LeftCannon" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-5, -4)
+
+[node name="RightCannon" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(5, -4)
+
+[node name="SpawnerComponent" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_r0y65")
+scene = ExtResource("8_ey5nt")
 
 [node name="ExplosionSpawnerComponent" type="Node2D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("7_r0y65")
 scene = ExtResource("13_58exr")
-
-[node name="DestroyedComponent" type="Node" parent="." node_paths=PackedStringArray("actor", "stats_component", "destroy_effect_spawner_component")]
-script = ExtResource("14_dj3ks")
-actor = NodePath("..")
-stats_component = NodePath("../StatsComponent")
-destroy_effect_spawner_component = NodePath("../ExplosionSpawnerComponent")
-
-[node name="SwitchSceneComponent" type="Node" parent="." node_paths=PackedStringArray("input_component")]
-script = ExtResource("15_jnqxo")
-scene = "res://menus/game_over_menu.tscn"
-input_component = NodePath("../InputComponent")
-
-[node name="FlashComponent" type="Node" parent="." node_paths=PackedStringArray("sprite")]
-script = ExtResource("16_q3ldh")
-sprite = NodePath("../ShipAnimatedSprite")
-flash_duration = 1.0

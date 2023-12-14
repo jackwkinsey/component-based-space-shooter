@@ -1,17 +1,20 @@
+class_name PlayerShip
 extends Node2D
 
-@onready var left_cannon: Marker2D = $LeftCannon
-@onready var right_cannon: Marker2D = $RightCannon
-@onready var spawner_component: SpawnerComponent = $SpawnerComponent as SpawnerComponent
-@onready var fire_rate_timer: Timer = $FireRateTimer
-@onready var input_component: InputComponent = $InputComponent as InputComponent
-@onready var ship_animated_sprite: AnimatedSprite2D = %ShipAnimatedSprite
+@onready var death_flash_component := %DeathFlashComponent as FlashComponent
+@onready var hit_flash_component := %HitFlashComponent as FlashComponent
+@onready var hit_shake_component := %HitShakeComponent as ShakeComponent
+@onready var hurtbox_component := %HurtboxComponent as HurtboxComponent
+@onready var input_component := %InputComponent as InputComponent
+@onready var move_component := %MoveComponent as MoveComponent
+@onready var spawner_component := %SpawnerComponent as SpawnerComponent
+@onready var stats_component := %StatsComponent as StatsComponent
+@onready var switch_scene_component: SwitchSceneComponent = %SwitchSceneComponent as SwitchSceneComponent
 @onready var flame_animated_sprite: AnimatedSprite2D = %FlameAnimatedSprite
-@onready var stats_component: StatsComponent = $StatsComponent as StatsComponent
-@onready var switch_scene_component: SwitchSceneComponent = $SwitchSceneComponent as SwitchSceneComponent
-@onready var hurtbox_component: HurtboxComponent = $HurtboxComponent as HurtboxComponent
-@onready var flash_component: FlashComponent = $FlashComponent as FlashComponent
-@onready var move_component: MoveComponent = $MoveComponent as MoveComponent
+@onready var ship_animated_sprite: AnimatedSprite2D = %ShipAnimatedSprite
+@onready var left_cannon: Marker2D = %LeftCannon
+@onready var right_cannon: Marker2D = %RightCannon
+@onready var fire_rate_timer: Timer = %FireRateTimer
 
 @export var starting_position: Vector2
 
@@ -19,6 +22,7 @@ extends Node2D
 func _ready() -> void:
 	fire_rate_timer.timeout.connect(fire_lasers)
 	stats_component.no_health.connect(die)
+	hurtbox_component.hurt.connect(hurt)
 
 
 func _process(_delta: float) -> void:
@@ -44,7 +48,6 @@ func animate_ship() -> void:
 
 func turn_ship_off() -> void:
 	fire_rate_timer.timeout.disconnect(fire_lasers)
-	stats_component.health = stats_component.max_health
 	visible = false
 	position = starting_position
 	hurtbox_component.is_invincible = true
@@ -53,12 +56,18 @@ func turn_ship_off() -> void:
 
 func turn_ship_on() -> void:
 	await get_tree().create_timer(1.0).timeout
+	stats_component.health = stats_component.max_health
 	move_component.allow_movement = true
 	visible = true
-	flash_component.flash()
+	death_flash_component.flash()
 	fire_rate_timer.timeout.connect(fire_lasers)
 	await get_tree().create_timer(1).timeout
 	hurtbox_component.is_invincible = false
+
+
+func hurt(_hitbox: HitboxComponent):
+	hit_flash_component.flash()
+	hit_shake_component.tween_shake()
 
 
 func die() -> void:

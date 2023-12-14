@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3 uid="uid://dk5x515arnu43"]
+
+[ext_resource type="Texture2D" uid="uid://d1k5x8otsjyad" path="res://assets/ship.png" id="1_jvpv8"]
+[ext_resource type="Script" path="res://ui/lives_container.gd" id="1_kpmjh"]
+[ext_resource type="LabelSettings" uid="uid://ca0h8gpkkukc0" path="res://fonts/default_label_settings.tres" id="2_5vme5"]
+
+[node name="LivesContainer" type="MarginContainer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_kpmjh")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="HBoxContainer"]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(8, 8)
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="HBoxContainer/Panel"]
+position = Vector2(4, 5)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_jvpv8")
+hframes = 3
+frame = 1
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "x 1"
+label_settings = ExtResource("2_5vme5")

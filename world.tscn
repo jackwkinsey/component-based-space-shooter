@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://chgkqjpthveef"]
+[gd_scene load_steps=7 format=3 uid="uid://chgkqjpthveef"]
 
 [ext_resource type="PackedScene" uid="uid://73hjlnaeg0ug" path="res://player_ship/player_ship.tscn" id="1_03w6o"]
 [ext_resource type="PackedScene" uid="uid://dfpgosubs5hab" path="res://enemies/enemy_generator.tscn" id="2_gsjwo"]
 [ext_resource type="PackedScene" uid="uid://v8w2ctjx8jm1" path="res://effects/space_background.tscn" id="2_manum"]
 [ext_resource type="PackedScene" uid="uid://beoom1nr68vt8" path="res://enemies/green_enemy.tscn" id="3_80dvl"]
+[ext_resource type="PackedScene" uid="uid://bepqxh7rlcbtj" path="res://ui/hearts_container.tscn" id="5_si7rh"]
+[ext_resource type="PackedScene" uid="uid://dk5x515arnu43" path="res://ui/lives_container.tscn" id="6_0raew"]
 
 [node name="World" type="Node2D"]
 
@@ -15,3 +17,11 @@ starting_position = Vector2(80, 216)
 green_enemy_scene = ExtResource("3_80dvl")
 
 [node name="SpaceBackground" parent="." instance=ExtResource("2_manum")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HeartsContainer" parent="CanvasLayer" node_paths=PackedStringArray("player_ship") instance=ExtResource("5_si7rh")]
+player_ship = NodePath("../../PlayerShip")
+
+[node name="LivesContainer" parent="CanvasLayer" node_paths=PackedStringArray("player_ship") instance=ExtResource("6_0raew")]
+player_ship = NodePath("../../PlayerShip")
